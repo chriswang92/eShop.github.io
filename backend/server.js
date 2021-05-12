@@ -5,7 +5,7 @@ const app = express();
 
 app.get('/', (req, res) => {
   // send string response to client
-  res.send('API is running...');
+  res.send('API is running23...');
 });
 
 app.get('/api/products', (req, res) => {
