@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MERN eCommerce platform app",
   "main": "server.js",
+  "type": "module",
   "dependencies": {
     "dotenv": "^9.0.2",
     "express": "^4.17.1",

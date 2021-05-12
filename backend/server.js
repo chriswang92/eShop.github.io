@@ -1,6 +1,6 @@
-const express = require('express'); // 'require' is common js which is traditionally what nodejs is use, on frontend we use 'import' which is es modules
-const dotenv = require('dotenv');
-const products = require('./data/products');
+import express from 'express'; // 'require' is common js which is traditionally what nodejs is use, on frontend we use 'import' which is es modules
+import dotenv from 'dotenv';
+import products from './data/products.js';
 
 dotenv.config()
 
