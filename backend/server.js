@@ -1,6 +1,7 @@
 import express from 'express'; // 'require' is common js which is traditionally what nodejs is use, on frontend we use 'import' which is es modules
 import dotenv from 'dotenv';
-import connectedDB from './config/db.js'; // on backend nodejs file, when import another js file, the '.js' needs to be added 
+import colors from 'colors';
+import connectedDB from './config/db.js'; // on backend nodejs file, when import another js file, the '.js' needs to be added
 import products from './data/products.js';
 
 dotenv.config();
@@ -31,6 +32,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(
     PORT,
     console.log(
-        `server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+        `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
+            .bold
     )
 );
