@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectedDB from './config/db.js'; // on backend nodejs file, when import another js file, the '.js' needs to be added
 import productRoutes from './routes/productRoutes.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
@@ -16,6 +17,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/products', productRoutes);
+
+// use custom middlewares https://expressjs.com/en/guide/using-middleware.html
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
