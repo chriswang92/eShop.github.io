@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import connectedDB from './config/db.js'; // on backend nodejs file, when import another js file, the '.js' needs to be added
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -11,12 +12,16 @@ connectedDB();
 
 const app = express();
 
+// express.json() is a middleware that parse json, this allows us accept json data in body
+app.use(express.json());
+
 app.get('/', (req, res) => {
     // send string response to client
     res.send('API is running23...');
 });
 
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // use custom middlewares https://expressjs.com/en/guide/using-middleware.html
 app.use(notFound);
