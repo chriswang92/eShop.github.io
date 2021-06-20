@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import { login, register } from '../actions/userActions';
+import { Link } from 'react-router-dom';
+import { register } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const RegisterScreen = ({ location, history }) => {
     const [name, setName] = useState('');
@@ -45,10 +45,10 @@ const RegisterScreen = ({ location, history }) => {
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='Name'>
+                <Form.Group controlId='name'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
-                        type='name'
+                        type='text'
                         placeholder='Enter Name'
                         value={name}
                         onChange={e => setName(e.target.value)}
