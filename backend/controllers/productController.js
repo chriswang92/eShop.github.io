@@ -7,6 +7,9 @@ import Product from '../models/productModel.js';
  * @access Public
  */
 const getProducts = asyncHandler(async (req, res) => {
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+
     const keyword = req.query.keyword
         ? {
               name: {
@@ -16,11 +19,17 @@ const getProducts = asyncHandler(async (req, res) => {
               }
           }
         : {}; //empty object here means finding all products
+
+    const count = await Product.countDocuments({ ...keyword });
+
     // send JSON response to client
     // products here is a js array with objects
     // res.json or res.send will convert the object to JSON content-type
-    const products = await Product.find({ ...keyword });
-    res.json(products);
+    const products = await Product.find({ ...keyword })
+        .limit(pageSize) // gives you correct size of data
+        .skip(pageSize * (page - 1)); // gives you the data at the correct page
+
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 /**
@@ -136,6 +145,16 @@ const createProductReview = asyncHandler(async (req, res) => {
         throw new Error('Product not found');
     }
 });
+/**
+ * @desc Get top rated products
+ * @route GET /api/products/top
+ * @access Public
+ */
+const getTopProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+    res.json(products);
+});
 
 export {
     getProducts,
@@ -143,5 +162,6 @@ export {
     deleteProduct,
     createProduct,
     updateProduct,
-    createProductReview
+    createProductReview,
+    getTopProducts
 };
