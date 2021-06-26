@@ -42,13 +42,16 @@ const ProductScreen = ({ history, match }) => {
             alert('Review Submitted!');
             setRating(0);
             setComment('');
-        }
-        // first load and switch between products
-        if (!product._id || product._id !== match.params.id) {
-            dispatch(listProductDetails(match.params.id));
             dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
         }
-    }, [dispatch, product, match, successProductReview, userInfo, history]);
+        if (
+            !product._id ||
+            product._id !== match.params.id ||
+            successProductReview
+        ) {
+            dispatch(listProductDetails(match.params.id));
+        }
+    }, [dispatch, match, product, successProductReview, userInfo, history]);
 
     const addToCartHandler = () => {
         // redirect
@@ -57,9 +60,10 @@ const ProductScreen = ({ history, match }) => {
 
     const createProductReviewHandler = e => {
         e.preventDefault();
-        dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
         dispatch(createProductReview(match.params.id, { rating, comment }));
     };
+
+    console.log(product);
 
     return (
         <>
