@@ -13,6 +13,7 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 import {
     listProductDetails,
     createProductReview
@@ -62,6 +63,7 @@ const ProductScreen = ({ history, match }) => {
 
     return (
         <>
+            <Meta title={product.name} />
             <Link className='btn btn-light my-3' to='/'>
                 Go Back
             </Link>
