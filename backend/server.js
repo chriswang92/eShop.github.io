@@ -24,11 +24,6 @@ if (process.env.NODE_ENV === 'development') {
 // express.json() is a middleware that parse json, this allows us accept json data in body
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    // send string response to client
-    res.send('API is running...');
-});
-
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/users', userRoutes);
@@ -46,6 +41,24 @@ const __dirname = path.resolve();
 // taking the uploads folder and make it static
 const staticUploadFolder = express.static(path.join(__dirname, '/uploads'));
 app.use('/uploads', staticUploadFolder);
+
+// Setup for production
+if (process.env.NODE_ENV === 'production') {
+    // set frontend build to a static folder
+    app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+    // any route that's not in the above routes, is going to be pointed to build/index.html
+    app.get('*', (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, 'frontend', 'build', 'index.html')
+        );
+    });
+} else {
+    app.get('/', (req, res) => {
+        // send string response to client
+        res.send('API is running...');
+    });
+}
 
 // use custom middlewares https://expressjs.com/en/guide/using-middleware.html
 app.use(notFound);
